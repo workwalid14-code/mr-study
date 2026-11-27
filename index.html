@@ -2492,26 +2492,40 @@
           // ফলাফল স্থায়ীভাবে গুগল ফর্মে পাঠানো হয়: নাম, নম্বর ও পরীক্ষার তারিখ।
           // সব শিক্ষার্থীর ফলাফল সেখানে জমা থাকে — সেখান থেকেই পরের দিনের
           // রেজাল্ট শিট তৈরি হয়। পাঠানো ব্যর্থ হলেও এই পেজের ফলাফল দেখানো থামে না।
+          // পাঠানো হয় লুকানো iframe-এ আসল HTML ফর্ম POST করে (fetch নয়) —
+          // entry ID গুলো ফর্মের public ডেটার দশমিক ID।
           try {
-            if (window.fetch) {
-              var parts = String(currentId).split("-");
-              var body =
-                "entry.251964f5=" + encodeURIComponent(name) +
-                "&entry.723a9f31=" + encodeURIComponent(String(score)) +
-                "&entry.1e867316=" + encodeURIComponent(currentId);
-              if (parts.length === 3) {
-                body +=
-                  "&entry.1e867316_year=" + encodeURIComponent(parts[0]) +
-                  "&entry.1e867316_month=" + encodeURIComponent(String(parseInt(parts[1], 10))) +
-                  "&entry.1e867316_day=" + encodeURIComponent(String(parseInt(parts[2], 10)));
-              }
-              fetch("https://docs.google.com/forms/d/e/1FAIpQLSfnVmaUPqSlOG0O8WkR6qHw-_msmfQ9wqekAk0Cstv0VGnHRA/formResponse", {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: body
-              }).catch(function () { /* নেটওয়ার্ক ব্যর্থ হলেও ফলাফল দেখা যাবে */ });
+            var parts = String(currentId).split("-");
+            var gFrame = document.createElement("iframe");
+            gFrame.name = "mr-study-gform-target";
+            gFrame.style.display = "none";
+            gFrame.setAttribute("aria-hidden", "true");
+            document.body.appendChild(gFrame);
+            var gForm = document.createElement("form");
+            gForm.method = "POST";
+            gForm.action = "https://docs.google.com/forms/d/e/1FAIpQLSfnVmaUPqSlOG0O8WkR6qHw-_msmfQ9wqekAk0Cstv0VGnHRA/formResponse";
+            gForm.target = "mr-study-gform-target";
+            gForm.style.display = "none";
+            var addField = function (n, v) {
+              var inp = document.createElement("input");
+              inp.type = "hidden";
+              inp.name = n;
+              inp.value = v;
+              gForm.appendChild(inp);
+            };
+            addField("entry.822373913", name);
+            addField("entry.871176034", String(score));
+            if (parts.length === 3) {
+              addField("entry.538353279_year", parts[0]);
+              addField("entry.538353279_month", String(parseInt(parts[1], 10)));
+              addField("entry.538353279_day", String(parseInt(parts[2], 10)));
             }
+            document.body.appendChild(gForm);
+            gForm.submit();
+            setTimeout(function () {
+              if (gForm.parentNode) gForm.parentNode.removeChild(gForm);
+              if (gFrame.parentNode) gFrame.parentNode.removeChild(gFrame);
+            }, 5000);
           } catch (e) { /* ফর্মে পাঠানো না গেলেও পেজের কাজ চলবে */ }
 
           var pct = Math.round((score / total) * 100);
