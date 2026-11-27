@@ -393,11 +393,6 @@
       .quiz-result h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
       .quiz-result .big-score { font-family: "Noto Serif Bengali", serif; font-size: 2.1rem; font-weight: 900; color: var(--gold); line-height: 1.25; }
       .quiz-result p { margin: 4px 0 0; color: #c9d9e8; }
-      .quiz-rank-wrap { margin-top: 26px; }
-      .quiz-rank-wrap h3, .latest-rank h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
-      .quiz-rank-wrap .sec-sub, .latest-rank .sec-sub { margin-bottom: 14px; }
-      tr.me td { background: rgba(240, 168, 28, .16) !important; font-weight: 700; }
-      .latest-rank { margin-top: 30px; }
       .katex { font-size: 1.05em; }
       @media (max-width: 640px) {
         .q-card { padding: 18px 16px; }
@@ -440,6 +435,7 @@
         font-weight: 600;
       }
       .rank-summary span b { color: var(--gold-ink); }
+      .rank-status { color: var(--ink-soft); font-weight: 600; margin: 4px 0 18px; }
       table.rank {
         width: 100%;
         border-collapse: collapse;
@@ -1024,7 +1020,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
               </span>
               <h3>MCQ পরীক্ষা</h3>
-              <p>তারিখ অনুযায়ী সাজানো সব পরীক্ষা। বাটনে ক্লিক করলেই এই সাইটেই পরীক্ষা শুরু হবে — গণিত KaTeX দিয়ে বইয়ের মতো সাজানো, জমা দিলেই সাথে সাথে নম্বর আর র‍্যাংক দেখা যাবে।</p>
+              <p>তারিখ অনুযায়ী সাজানো সব পরীক্ষা। বাটনে ক্লিক করলেই এই সাইটেই পরীক্ষা শুরু হবে — জমা দিলেই সাথে সাথে নম্বর দেখা যাবে। র‍্যাংকলিস্ট শুধু র‍্যাংকলিস্ট পেজে।</p>
               <span class="hc-meta">সর্বশেষ পরীক্ষা: ২৭ নভেম্বর ২০২৬ · মোট ১০টি পরীক্ষা</span>
               <span class="hc-go">পরীক্ষার পেজে যাও
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
@@ -1084,7 +1080,7 @@
             <h2>MCQ পরীক্ষা</h2>
             <span class="rule" aria-hidden="true"></span>
           </div>
-          <p class="sec-sub">তারিখ অনুযায়ী সব পরীক্ষা সাজানো আছে, সবচেয়ে নতুনটা সবার উপরে। 'পরীক্ষা দাও' বাটনে ক্লিক করলেই এই সাইটেই কুইজ খুলবে — নাম লিখে উত্তর দাও, জমা দিলেই সাথে সাথে নম্বর, সঠিক উত্তর আর র‍্যাংকলিস্ট দেখা যাবে। গণিতের প্রশ্ন KaTeX দিয়ে বইয়ের মতো সাজানো, কোনো ছবি নয়।</p>
+          <p class="sec-sub">তারিখ অনুযায়ী সব পরীক্ষা সাজানো আছে, সবচেয়ে নতুনটা সবার উপরে। 'পরীক্ষা দাও' বাটনে ক্লিক করলেই এই সাইটেই কুইজ খুলবে — নাম লিখে উত্তর দাও, জমা দিলেই সাথে সাথে নম্বর আর সঠিক উত্তর দেখা যাবে। র‍্যাংকলিস্ট শুধু র‍্যাংকলিস্ট পেজে পাওয়া যাবে।</p>
 
           <div class="exam-list">
             <article class="exam latest">
@@ -1242,23 +1238,12 @@
             <h3>তোমার ফলাফল</h3>
             <div class="big-score"><span id="resScore">0 / 20</span> · <span id="resPct">0%</span></div>
             <p id="resDetail"></p>
-            <button class="btn" type="button" id="quizRetry" style="margin-top:16px">আবার পরীক্ষা দাও</button>
+            <a class="btn" href="#/rank" style="margin-top:16px">র‍্যাংকলিস্টে তোমার অবস্থান দেখো
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+            </a>
+            <button class="btn" type="button" id="quizRetry" style="margin-top:10px">আবার পরীক্ষা দাও</button>
           </div>
 
-          <div class="quiz-rank-wrap" id="quizRankWrap" hidden>
-            <h3 id="quizRankTitle">এই কুইজের র‍্যাংকলিস্ট</h3>
-            <p class="sec-sub">এই পাতায় যারা পরীক্ষা দিয়েছে, তাদের ফলাফল এখানেই মেধাক্রম অনুযায়ী সাজানো হচ্ছে।</p>
-            <div class="rank-summary">
-              <span>মোট পরীক্ষার্থী: <b id="quizRankCount">0 জন</b></span>
-              <span>তোমার র‍্যাংক: <b id="quizRankMine">—</b></span>
-            </div>
-            <table class="rank">
-              <thead>
-                <tr><th scope="col">মেধাক্রম</th><th scope="col">পরীক্ষার্থীর নাম</th><th scope="col">প্রাপ্ত নম্বর</th><th scope="col">শতাংশ</th></tr>
-              </thead>
-              <tbody id="quizRankBody"></tbody>
-            </table>
-          </div>
         </section>
       </main>
     </div>
@@ -1275,10 +1260,11 @@
             <h2>র‍্যাংকলিস্ট</h2>
             <span class="rule" aria-hidden="true"></span>
           </div>
-          <p class="sec-sub">প্রতিটি পরীক্ষার মেধাক্রম অনুযায়ী ফলাফল। তারিখ বেছে নিলেই সেই দিনের র‍্যাংকলিস্ট দেখা যাবে।</p>
+          <p class="sec-sub">প্রতিটি পরীক্ষার মেধাক্রম অনুযায়ী ফলাফল। তারিখ বেছে নিলেই সেই দিনের র‍্যাংকলিস্ট দেখা যাবে। পরীক্ষা জমা দিলেই তোমার নাম ও নম্বর সাথে সাথে সংশ্লিষ্ট তারিখের তালিকায় উঠবে — সবার ফলাফল একই তালিকায় নম্বর অনুযায়ী সাজানো থাকে।</p>
 
           <div class="tabs" role="tablist" aria-label="র‍্যাংকলিস্টের তারিখ">
-            <button class="tab" role="tab" id="tab-26" aria-selected="true" aria-controls="panel-26" data-target="panel-26">২৬ নভেম্বর ২০২৬</button>
+            <button class="tab" role="tab" id="tab-27" aria-selected="true" aria-controls="panel-27" data-target="panel-27">২৭ নভেম্বর ২০২৬</button>
+            <button class="tab" role="tab" id="tab-26" aria-selected="false" aria-controls="panel-26" data-target="panel-26" tabindex="-1">২৬ নভেম্বর ২০২৬</button>
             <button class="tab" role="tab" id="tab-23" aria-selected="false" aria-controls="panel-23" data-target="panel-23" tabindex="-1">২৩ নভেম্বর ২০২৬</button>
             <button class="tab" role="tab" id="tab-22" aria-selected="false" aria-controls="panel-22" data-target="panel-22" tabindex="-1">২২ নভেম্বর ২০২৬</button>
             <button class="tab" role="tab" id="tab-21" aria-selected="false" aria-controls="panel-21" data-target="panel-21" tabindex="-1">২১ নভেম্বর ২০২৬</button>
@@ -1287,7 +1273,21 @@
             <button class="tab" role="tab" id="tab-18" aria-selected="false" aria-controls="panel-18" data-target="panel-18" tabindex="-1">১৮ নভেম্বর ২০২৬</button>
           </div>
 
-          <div class="rank-panel active" id="panel-26" role="tabpanel" aria-labelledby="tab-26">
+          <div class="rank-panel active" id="panel-27" role="tabpanel" aria-labelledby="tab-27" data-date="2026-11-27">
+            <div class="rank-summary">
+              <span>মোট পরীক্ষার্থী: <b>০ জন</b></span>
+              <span>সর্বোচ্চ নম্বর: <b>—</b></span>
+            </div>
+            <table class="rank">
+              <thead>
+                <tr><th scope="col">মেধাক্রম</th><th scope="col">পরীক্ষার্থীর নাম</th><th scope="col">প্রাপ্ত নম্বর</th><th scope="col">শতাংশ</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <p class="rank-status" id="rankStatus27">র‍্যাংকলিস্ট লোড হচ্ছে…</p>
+          </div>
+
+          <div class="rank-panel" id="panel-26" role="tabpanel" aria-labelledby="tab-26" data-date="2026-11-26" hidden>
             <div class="rank-summary">
               <span>মোট পরীক্ষার্থী: <b>১ জন</b></span>
               <span>সর্বোচ্চ নম্বর: <b>১১ / ২০</b></span>
@@ -1311,7 +1311,7 @@
             </figure>
           </div>
 
-          <div class="rank-panel" id="panel-23" role="tabpanel" aria-labelledby="tab-23" hidden>
+          <div class="rank-panel" id="panel-23" role="tabpanel" aria-labelledby="tab-23" data-date="2026-11-23" hidden>
             <div class="rank-summary">
               <span>মোট পরীক্ষার্থী: <b>১ জন</b></span>
               <span>সর্বোচ্চ নম্বর: <b>৭ / ২০</b></span>
@@ -1335,7 +1335,7 @@
             </figure>
           </div>
 
-          <div class="rank-panel" id="panel-22" role="tabpanel" aria-labelledby="tab-22" hidden>
+          <div class="rank-panel" id="panel-22" role="tabpanel" aria-labelledby="tab-22" data-date="2026-11-22" hidden>
             <div class="rank-summary">
               <span>মোট পরীক্ষার্থী: <b>১ জন</b></span>
               <span>সর্বোচ্চ নম্বর: <b>৮ / ২০</b></span>
@@ -1359,7 +1359,7 @@
             </figure>
           </div>
 
-          <div class="rank-panel" id="panel-21" role="tabpanel" aria-labelledby="tab-21" hidden>
+          <div class="rank-panel" id="panel-21" role="tabpanel" aria-labelledby="tab-21" data-date="2026-11-21" hidden>
             <div class="rank-summary">
               <span>মোট পরীক্ষার্থী: <b>২ জন</b></span>
               <span>সর্বোচ্চ নম্বর: <b>১২ / ২০</b></span>
@@ -1389,7 +1389,7 @@
             </figure>
           </div>
 
-          <div class="rank-panel" id="panel-20" role="tabpanel" aria-labelledby="tab-20" hidden>
+          <div class="rank-panel" id="panel-20" role="tabpanel" aria-labelledby="tab-20" data-date="2026-11-20" hidden>
             <div class="rank-summary">
               <span>মোট পরীক্ষার্থী: <b>২ জন</b></span>
               <span>সর্বোচ্চ নম্বর: <b>৯ / ২০</b></span>
@@ -1419,7 +1419,7 @@
             </figure>
           </div>
 
-          <div class="rank-panel" id="panel-19" role="tabpanel" aria-labelledby="tab-19" hidden>
+          <div class="rank-panel" id="panel-19" role="tabpanel" aria-labelledby="tab-19" data-date="2026-11-19" hidden>
             <div class="rank-summary">
               <span>মোট পরীক্ষার্থী: <b>১ জন</b></span>
               <span>সর্বোচ্চ নম্বর: <b>১২ / ২০</b></span>
@@ -1443,7 +1443,7 @@
             </figure>
           </div>
 
-          <div class="rank-panel" id="panel-18" role="tabpanel" aria-labelledby="tab-18" hidden>
+          <div class="rank-panel" id="panel-18" role="tabpanel" aria-labelledby="tab-18" data-date="2026-11-18" hidden>
             <div class="rank-summary">
               <span>মোট পরীক্ষার্থী: <b>২ জন</b></span>
               <span>সর্বোচ্চ নম্বর: <b>১৬ / ২০</b></span>
@@ -1917,6 +1917,10 @@
           });
           document.title = TITLES[route];
           if (route === "quiz" && window.__loadQuiz) window.__loadQuiz(parsed.param);
+          if (route === "rank" && window.__pendingRankPanel && window.__rankSelectTab) {
+            var pTab = document.querySelector('.tab[data-target="' + window.__pendingRankPanel + '"]');
+            if (pTab) window.__rankSelectTab(pTab);
+          }
           if (changed) {
             window.scrollTo(0, 0);
             if (window.__closeDrawer) window.__closeDrawer();
@@ -1925,6 +1929,30 @@
         }
         window.addEventListener("hashchange", function () { render(true); });
         render(false);
+      })();
+    </script>
+    <!-- Firebase (Firestore): স্কোর সংরক্ষণ ও লাইভ র‍্যাংকলিস্টের জন্য।
+         FocusForge Flow-এর একই প্রজেক্ট (focusforge-flow) ব্যবহার করা হয়। -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script>
+      (function () {
+        window.__fbDb = null;
+        try {
+          var firebaseConfig = {
+            apiKey: "AIzaSyBVQDcKnaY8tFc6sdBxz1AmOGtKNLJW2_4",
+            authDomain: "focusforge-flow.firebaseapp.com",
+            projectId: "focusforge-flow",
+            storageBucket: "focusforge-flow.firebasestorage.app",
+            messagingSenderId: "665058552429"
+          };
+          if (window.firebase) {
+            if (!firebase.apps || !firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            window.__fbDb = firebase.firestore();
+          }
+        } catch (e) {
+          window.__fbDb = null;
+        }
       })();
     </script>
     <script>
@@ -1941,16 +1969,263 @@
               panel.hidden = !on;
             }
           });
+          // বেছে নেওয়া তারিখের র‍্যাংকলিস্ট Firestore থেকে লাইভ লোড করা
+          var selPanel = document.getElementById(tab.getAttribute("data-target"));
+          if (selPanel && window.__watchRankDate) {
+            var selDate = selPanel.getAttribute("data-date");
+            if (selDate) window.__watchRankDate(selDate);
+          }
         }
-        tabs.forEach(function (tab, i) {
+        function wire(tab) {
           tab.addEventListener("click", function () { select(tab); });
           tab.addEventListener("keydown", function (e) {
+            var i = tabs.indexOf(tab);
             var j = null;
             if (e.key === "ArrowRight" || e.key === "ArrowDown") j = (i + 1) % tabs.length;
             if (e.key === "ArrowLeft" || e.key === "ArrowUp") j = (i - 1 + tabs.length) % tabs.length;
             if (j !== null) { e.preventDefault(); select(tabs[j]); tabs[j].focus(); }
           });
-        });
+        }
+        tabs.forEach(wire);
+        window.__rankSelectTab = select;
+        window.__rankRegisterTab = function (tab) { tabs.push(tab); wire(tab); };
+
+        // ---------- র‍্যাংকলিস্ট: Firestore থেকে লাইভ লোড + জমা দেওয়া ফলাফল ----------
+        // র‍্যাংকলিস্ট শুধু র‍্যাংকলিস্ট পেজেই থাকে — কুইজ পেজের ভেতরে নয়।
+        // স্কোর Firestore-এর `mr-study-scores` কালেকশনে জমা থাকে; তারিখ বেছে
+        // নিলে সেই তারিখের সব স্কোর নম্বর অনুযায়ী বড় থেকে ছোট সাজিয়ে
+        // সাথে সাথে দেখানো হয়। Firestore পাওয়া না গেলে এই সেশনের ফলাফল
+        // শুধু এই পেজেই যোগ হয় (fallback হিসেবে)।
+        var BN = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+        function bnNum(n) { return String(n).replace(/[0-9]/g, function (d) { return BN[+d]; }); }
+        function unBn(s) {
+          return String(s).replace(/[০-৯]/g, function (d) { return String(BN.indexOf(d)); });
+        }
+        function escHtml(s) {
+          return String(s).replace(/[&<>"']/g, function (c) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+          });
+        }
+
+        function panelIdFor(dateId) {
+          return "panel-" + String(dateId).slice(8, 10).replace(/^0/, "");
+        }
+
+        // সংশ্লিষ্ট তারিখের ট্যাব ও প্যানেল না থাকলে তৈরি করা
+        function ensurePanel(dateId, dateBn) {
+          var day = String(dateId).slice(8, 10).replace(/^0/, "");
+          if (!day) return null;
+          var panelId = "panel-" + day;
+          var tabId = "tab-" + day;
+          var panel = document.getElementById(panelId);
+          var tabList = document.querySelector(".tabs");
+
+          if (!panel && tabList) {
+            var tab = document.createElement("button");
+            tab.className = "tab";
+            tab.setAttribute("role", "tab");
+            tab.id = tabId;
+            tab.setAttribute("aria-selected", "false");
+            tab.setAttribute("aria-controls", panelId);
+            tab.setAttribute("data-target", panelId);
+            tab.tabIndex = -1;
+            tab.textContent = dateBn;
+            tabList.insertBefore(tab, tabList.firstChild);
+            window.__rankRegisterTab(tab);
+
+            panel = document.createElement("div");
+            panel.className = "rank-panel";
+            panel.id = panelId;
+            panel.setAttribute("role", "tabpanel");
+            panel.setAttribute("aria-labelledby", tabId);
+            panel.setAttribute("data-date", dateId);
+            panel.hidden = true;
+            panel.innerHTML =
+              '<div class="rank-summary"><span>মোট পরীক্ষার্থী: <b></b></span>' +
+              '<span>সর্বোচ্চ নম্বর: <b></b></span></div>' +
+              '<table class="rank"><thead><tr><th scope="col">মেধাক্রম</th>' +
+              '<th scope="col">পরীক্ষার্থীর নাম</th><th scope="col">প্রাপ্ত নম্বর</th>' +
+              '<th scope="col">শতাংশ</th></tr></thead><tbody></tbody></table>' +
+              '<p class="rank-status">র‍্যাংকলিস্ট লোড হচ্ছে…</p>';
+            tabList.parentNode.insertBefore(panel, tabList.nextSibling);
+          }
+          if (panel && !panel.getAttribute("data-date")) panel.setAttribute("data-date", dateId);
+          return panel;
+        }
+
+        function findPanelByDate(dateId) {
+          var panels = document.querySelectorAll(".rank-panel");
+          for (var i = 0; i < panels.length; i++) {
+            if (panels[i].getAttribute("data-date") === dateId) return panels[i];
+          }
+          return null;
+        }
+
+        function setRankStatus(panel, text) {
+          var st = panel.querySelector(".rank-status");
+          if (!st) return;
+          st.textContent = text || "";
+          st.style.display = text ? "" : "none";
+        }
+
+        // rows: [{name, score, total, mine}] — টেবিল ও সারসংক্ষেপে বসানো
+        function renderRankRows(panel, rows) {
+          var tbody = panel.querySelector("tbody");
+          if (!tbody) return;
+          var html = "";
+          rows.forEach(function (r, i) {
+            var pct = r.total ? Math.round((r.score / r.total) * 100) : 0;
+            html += '<tr' + (i === 0 ? ' class="top"' : "") + (r.mine ? ' data-session="1"' : "") + ">" +
+              '<td><span class="rank-no">' + bnNum(i + 1) + "</span></td>" +
+              "<td>" + escHtml(r.name) + (r.mine ? ' <span class="badge">তোমার ফলাফল</span>' : "") + "</td>" +
+              '<td class="score">' + bnNum(r.score) + " / " + bnNum(r.total) + "</td>" +
+              "<td>" + bnNum(pct) + "%</td></tr>";
+          });
+          tbody.innerHTML = html;
+          var summary = panel.querySelectorAll(".rank-summary b");
+          if (summary.length >= 2) {
+            summary[0].textContent = bnNum(rows.length) + " জন";
+            summary[1].textContent = rows.length ? bnNum(rows[0].score) + " / " + bnNum(rows[0].total) : "—";
+          }
+          if (rows.length) setRankStatus(panel, "");
+        }
+
+        // এই সেশনের ফলাফল সরাসরি তালিকায় যোগ করা (Firestore ব্যর্থ হলে fallback)
+        window.__addRankResult = function (dateId, dateBn, name, score, total) {
+          var panel = ensurePanel(dateId, dateBn);
+          if (!panel) return;
+          var tbody = panel.querySelector("tbody");
+          if (!tbody) return;
+
+          // আগের সারি পড়ে নেওয়া; এই সেশনের আগের জমা থাকলে তা বদলে নতুনটা বসবে
+          var rows = [];
+          Array.prototype.forEach.call(tbody.querySelectorAll("tr"), function (tr) {
+            if (tr.getAttribute("data-session") === "1") return;
+            var cells = tr.querySelectorAll("td");
+            if (cells.length < 4) return;
+            var parts = unBn(cells[2].textContent).split("/");
+            rows.push({
+              name: cells[1].textContent.replace(/তোমার ফলাফল/g, "").trim(),
+              score: parseInt(parts[0], 10) || 0,
+              total: parseInt(parts[1], 10) || total,
+              mine: false
+            });
+          });
+          rows.push({ name: name, score: score, total: total, mine: true });
+          rows.sort(function (a, b) { return b.score - a.score; });
+          renderRankRows(panel, rows);
+
+          // র‍্যাংকলিস্ট পেজে গেলে এই তারিখের তালিকাই প্রথমে খুলবে
+          window.__pendingRankPanel = panel.id;
+        };
+
+        // ---------- Firestore: লাইভ পড়া ও স্কোর লেখা ----------
+        var watchedDates = {};
+        var myLastScore = null; // {date, name, score} — নিজের সারি চিহ্নিত করতে
+
+        function rowsFromSnapshot(snap, dateId) {
+          var rows = [];
+          snap.forEach(function (doc) {
+            var d = doc.data() || {};
+            rows.push({
+              name: d.name ? String(d.name) : "নাম দেওয়া হয়নি",
+              score: parseInt(d.score, 10) || 0,
+              total: parseInt(d.total, 10) || 20,
+              ts: d.createdAt && d.createdAt.toMillis ? d.createdAt.toMillis() : 0,
+              mine: false
+            });
+          });
+          // নম্বর অনুযায়ী বড় থেকে ছোট; সমান নম্বরে আগে জমা দেওয়া জন আগে
+          rows.sort(function (a, b) { return (b.score - a.score) || (a.ts - b.ts); });
+          if (myLastScore && myLastScore.date === dateId) {
+            for (var i = 0; i < rows.length; i++) {
+              if (rows[i].name === myLastScore.name && rows[i].score === myLastScore.score) {
+                rows[i].mine = true;
+                break;
+              }
+            }
+          }
+          return rows;
+        }
+
+        // তারিখের র‍্যাংকলিস্ট Firestore থেকে লাইভ শোনা — নতুন জমা এলেই তালিকা হালনাগাদ হয়
+        window.__watchRankDate = function (dateId) {
+          if (!dateId || watchedDates[dateId]) return;
+          watchedDates[dateId] = true;
+          var panel = findPanelByDate(dateId);
+          if (!window.__fbDb) {
+            if (panel && !panel.querySelector("tbody tr")) {
+              setRankStatus(panel, "এখনো এই তারিখের কোনো ফলাফল পাওয়া যায়নি। পরীক্ষা জমা দিলেই নাম এখানে উঠবে।");
+            }
+            return;
+          }
+          try {
+            window.__fbDb.collection("mr-study-scores").where("date", "==", dateId)
+              .onSnapshot(function (snap) {
+                var p = findPanelByDate(dateId);
+                if (!p) return;
+                if (snap.empty) {
+                  // Firestore-এ এই তারিখের স্কোর নেই; প্যানেলে আগের (ঐতিহাসিক) সারি থাকলে তা-ই থাকে
+                  if (!p.querySelector("tbody tr")) {
+                    setRankStatus(p, "এখনো এই তারিখের কোনো ফলাফল জমা পড়েনি। পরীক্ষা জমা দিলেই নাম সাথে সাথে এখানে উঠবে।");
+                  }
+                  return;
+                }
+                renderRankRows(p, rowsFromSnapshot(snap, dateId));
+              }, function (err) {
+                var p2 = findPanelByDate(dateId);
+                if (p2 && !p2.querySelector("tbody tr")) {
+                  setRankStatus(p2, "র‍্যাংকলিস্ট লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে পেজটি আবার খোলো।");
+                }
+              });
+          } catch (e) { /* Firestore না পেলে প্যানেলের আগের অবস্থাই থাকে */ }
+        };
+
+        // একবার পড়ে তালিকা হালনাগাদ করা (জমা দেওয়ার পরপরই ডাকা হয়)
+        window.__refreshRankPanel = function (dateId) {
+          if (!window.__fbDb) return;
+          try {
+            window.__fbDb.collection("mr-study-scores").where("date", "==", dateId).get()
+              .then(function (snap) {
+                var p = findPanelByDate(dateId);
+                if (!p || snap.empty) return;
+                renderRankRows(p, rowsFromSnapshot(snap, dateId));
+              })
+              .catch(function () { /* লাইভ লিসেনার থাকলে তাতেই হালনাগাদ আসবে */ });
+          } catch (e) { /* উপেক্ষা করা যায় */ }
+        };
+
+        // কুইজ জমা: স্কোর Firestore-এর `mr-study-scores` কালেকশনে সংরক্ষণ;
+        // সফল হলে র‍্যাংকলিস্ট সাথে সাথে হালনাগাদ হয়।
+        window.__saveScoreToFirestore = function (dateId, dateBn, name, score, total) {
+          var fallback = function () { window.__addRankResult(dateId, dateBn, name, score, total); };
+          ensurePanel(dateId, dateBn);
+          window.__pendingRankPanel = panelIdFor(dateId);
+          if (!window.__fbDb || !window.firebase) { fallback(); return; }
+          myLastScore = { date: dateId, name: name, score: score };
+          window.__watchRankDate(dateId);
+          try {
+            window.__fbDb.collection("mr-study-scores").add({
+              name: name,
+              score: score,
+              total: total,
+              date: dateId,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(function () {
+              window.__refreshRankPanel(dateId);
+            }).catch(function () {
+              fallback();
+            });
+          } catch (e) { fallback(); }
+        };
+
+        // পেজ খুললেই সক্রিয় (বেছে নেওয়া) তারিখের র‍্যাংকলিস্ট Firestore থেকে লোড হয়
+        (function () {
+          var active = document.querySelector(".rank-panel.active");
+          if (active && active.getAttribute("data-date")) {
+            window.__watchRankDate(active.getAttribute("data-date"));
+          }
+        })();
       })();
     </script>
     <script>
@@ -2297,15 +2572,12 @@
         if (!form || typeof QUIZZES === "undefined") return;
         var msg = document.getElementById("quizMsg");
         var result = document.getElementById("quizResult");
-        var rankWrap = document.getElementById("quizRankWrap");
-        var rankBody = document.getElementById("quizRankBody");
         var qBox = document.getElementById("quizQuestions");
         var nameInput = document.getElementById("quizName");
         var LATEST = "2026-11-27";
         var currentId = null;
         var currentSet = null;
         var savedName = "";
-        var entriesBySet = {}; // সেট অনুযায়ী এই সেশনের র‍্যাংকলিস্ট (পাতা খোলা থাকা পর্যন্ত)
 
         var NOTES = {
           "2026-11-27": " এই সেটের প্রশ্নগুলো DU 'ক' ইউনিটের বিগত বছরের হুবহু (verbatim) প্রশ্ন।"
@@ -2331,10 +2603,8 @@
           document.getElementById("quizSub").textContent =
             set.dateBn + " (" + set.weekday + ") · " + set.title + " · মোট " + total + "টি প্রশ্ন · প্রতিটি 1 নম্বর";
           document.getElementById("quizIntro").innerHTML = set.du
-            ? "প্রশ্নগুলো <b>পদার্থবিজ্ঞান 5টি, রসায়ন 5টি, গণিত 5টি, জীববিজ্ঞান 5টি</b> — মোট <b>" + total + "টি প্রশ্ন</b>, প্রতিটি 1 নম্বর। গণিত ও সূত্র ছবি হিসেবে নয়, KaTeX দিয়ে বইয়ের মতো সাজানো — ভগ্নাংশে মাঝখানে দাগ, উপরে লব আর নিচে হর। সব প্রশ্নের উত্তর দিয়ে জমা দিলেই সাথে সাথে নম্বর আর সঠিক উত্তর দেখা যাবে।" + (NOTES[id] || "")
+            ? "প্রশ্নগুলো <b>পদার্থবিজ্ঞান 5টি, রসায়ন 5টি, গণিত 5টি, জীববিজ্ঞান 5টি</b> — মোট <b>" + total + "টি প্রশ্ন</b>, প্রতিটি 1 নম্বর। সব প্রশ্নের উত্তর দিয়ে জমা দিলেই সাথে সাথে নম্বর আর সঠিক উত্তর দেখা যাবে।" + (NOTES[id] || "")
             : "মোট <b>" + total + "টি প্রশ্ন</b>, প্রতিটি 1 নম্বর। সব প্রশ্নের উত্তর দিয়ে জমা দিলেই সাথে সাথে নম্বর আর সঠিক উত্তর দেখা যাবে।";
-          document.getElementById("quizRankTitle").textContent = "র‍্যাংকলিস্ট — " + set.dateBn;
-
           var html = "";
           set.questions.forEach(function (q, i) {
             html += '<div class="q-card" data-q="' + i + '"><div class="q-head">' +
@@ -2356,32 +2626,7 @@
           msg.textContent = "";
           result.classList.remove("show");
           document.getElementById("quizSubmit").disabled = false;
-          var entries = entriesBySet[id] || [];
-          if (entries.length) { drawRank(null); } else { rankWrap.hidden = true; }
           ensureMath();
-        }
-
-        function drawRank(myEntry) {
-          var set = currentSet;
-          var total = set.questions.length;
-          var entries = (entriesBySet[currentId] || []).slice().sort(function (a, b) { return b.score - a.score; });
-          var html = "";
-          var myRank = 0;
-          entries.forEach(function (e, i) {
-            var rank = i + 1;
-            var mine = e === myEntry;
-            if (mine) myRank = rank;
-            var pct = Math.round((e.score / total) * 100);
-            html += '<tr class="' + (rank === 1 ? "top" : "") + (mine ? " me" : "") + '">' +
-              '<td><span class="rank-no">' + rank + "</span></td>" +
-              "<td>" + esc(e.name) + (mine ? " (তুমি)" : "") + "</td>" +
-              '<td class="score">' + e.score + " / " + total + "</td>" +
-              "<td>" + pct + "%</td></tr>";
-          });
-          rankBody.innerHTML = html;
-          document.getElementById("quizRankCount").textContent = entries.length + " জন";
-          document.getElementById("quizRankMine").textContent = myRank ? String(myRank) : "—";
-          rankWrap.hidden = false;
         }
 
         form.addEventListener("submit", function (ev) {
@@ -2428,19 +2673,27 @@
 
           var name = (nameInput.value || "").trim() || "নাম দেওয়া হয়নি";
           savedName = nameInput.value;
-          var entry = { name: name, score: score };
-          if (!entriesBySet[currentId]) entriesBySet[currentId] = [];
-          entriesBySet[currentId].push(entry);
+
+          // জমা দেওয়া নাম ও নম্বর শুধু র‍্যাংকলিস্ট সেকশনে যোগ হয় —
+          // কুইজ পেজের ভেতরে কোনো র‍্যাংকলিস্ট দেখানো হয় না।
+          // স্কোর স্থায়ীভাবে Firestore-এর `mr-study-scores` কালেকশনে জমা হয়
+          // (নাম, নম্বর, মোট প্রশ্ন, পরীক্ষার তারিখ ও জমার সময়) — গুগল ফর্মে
+          // আর কিছুই পাঠানো হয় না। সংরক্ষণ ব্যর্থ হলেও এই পেজের ফলাফল
+          // দেখানো থামে না; সেক্ষেত্রে ফলাফল শুধু এই সেশনের র‍্যাংকলিস্টে যোগ হয়।
+          if (window.__saveScoreToFirestore) {
+            window.__saveScoreToFirestore(currentId, set.dateBn, name, score, total);
+          } else if (window.__addRankResult) {
+            window.__addRankResult(currentId, set.dateBn, name, score, total);
+          }
 
           var pct = Math.round((score / total) * 100);
           document.getElementById("resScore").textContent = score + " / " + total;
           document.getElementById("resPct").textContent = pct + "%";
           document.getElementById("resDetail").textContent =
             name + ", তুমি " + total + "টি প্রশ্নের মধ্যে " + score + "টির সঠিক উত্তর দিয়েছো। " +
-            "নিচে প্রতিটি প্রশ্নে সঠিক উত্তর সবুজ রঙে চিহ্নিত করা আছে। তোমার নাম এই কুইজের র‍্যাংকলিস্টে যোগ হয়েছে।";
+            "নিচে প্রতিটি প্রশ্নে সঠিক উত্তর সবুজ রঙে চিহ্নিত করা আছে। তোমার ফলাফল স্থায়ীভাবে সংরক্ষণ করা হয়েছে এবং নাম ও নম্বর র‍্যাংকলিস্ট সেকশনে যোগ করা হয়েছে — নিচের বাটনে গিয়ে মেধাক্রমে তোমার অবস্থান দেখো।";
           document.getElementById("quizSubmit").disabled = true;
           result.classList.add("show");
-          drawRank(entry);
           result.scrollIntoView({ behavior: "smooth", block: "center" });
           result.focus({ preventScroll: true });
         });
